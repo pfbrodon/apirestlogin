@@ -24,26 +24,27 @@ class Login(db.Model):
     email = db.Column(db.String(45), unique=True, nullable=False)
     password = db.Column(db.String(8), nullable=False)
 
-from werkzeug.security import check_password_hash
+#from werkzeug.security import check_password_hash
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
-@app.route('/admin')
-def admin():
-    return render_template('admin.html')
+#@app.route('/admin')
+#def admin():
+#    return render_template('admin.html')
 
 @app.route('/login', methods=['GET','POST'])
 def login():
     email = request.form['email']
     password = request.form['password']
 
-    usuario_autenticado = Login.query.filter_by(email=email).first()
+    #usuario_autenticado = Login.query.filter_by(email=email).first()
+    usuario_autenticado = Login.query.filter_by(email=email, password=password).first()
 
     if usuario_autenticado: # and check_password_hash(usuario_autenticado.password, password):
         # Autenticación exitosa
-        return render_template('bienvenida.html', email=usuario_autenticado.email)
+        return render_template('admin.html', email=usuario_autenticado.email)
     else:
         # Credenciales incorrectas
         return render_template('index.html')
