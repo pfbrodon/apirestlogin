@@ -7,17 +7,17 @@ from flask_marshmallow import Marshmallow
 app=Flask(__name__, template_folder='template')  # crear el objeto app de la clase Flask
 
 ###########################################################################
-#app.config['MYSQL_HOST']='pfbrodon.mysql.pythonanywhere-services.com'
-#app.config['MYSQL_USER']='pfbrodon'
-#app.config['MYSQL_PASSWORD']='prueba1234'
-#app.config['MYSQL_DB']='pfbrodon$proyecto'
-#app.config['MYSQL_CURSORCLASS']='DictCursor'
-############################################################################
-app.config['MYSQL_HOST']='localhost'
-app.config['MYSQL_USER']='root'
-app.config['MYSQL_PASSWORD']='root'
-app.config['MYSQL_DB']='proyecto'
+app.config['MYSQL_HOST']='pfbrodon.mysql.pythonanywhere-services.com'
+app.config['MYSQL_USER']='pfbrodon'
+app.config['MYSQL_PASSWORD']='prueba1234'
+app.config['MYSQL_DB']='pfbrodon$proyecto'
 app.config['MYSQL_CURSORCLASS']='DictCursor'
+############################################################################
+#app.config['MYSQL_HOST']='localhost'
+#app.config['MYSQL_USER']='root'
+#app.config['MYSQL_PASSWORD']='root'
+#app.config['MYSQL_DB']='proyecto'
+#app.config['MYSQL_CURSORCLASS']='DictCursor'
 #############################################################################
 ## configuro la base de datos, con el nombre el usuario y la clave
 #app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://pfbrodon:prueba1234@pfbrodon.mysql.pythonanywhere-services.com/pfbrodon$proyecto'
@@ -55,4 +55,4 @@ def login():
         
 if __name__=='__main__':
     app.secret_key="adminbuloneria"
-    app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
+    app.run(debug=True, port=5000, threaded=True)
