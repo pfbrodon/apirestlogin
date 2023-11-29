@@ -47,7 +47,7 @@ def login():
         return render_template('admin.html', email=usuario_autenticado.email)
     else:
         # Credenciales incorrectas
-        return render_template('index.html')
+        return render_template('index.html', mensaje="Usuario Incorrecto")
     
 if __name__=='__main__':
     app.run(debug=True, port=5000)
