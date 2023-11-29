@@ -1,4 +1,4 @@
 show databases;
 use bjyscvxkl0myibglf5tr;
 show tables;
-insert into login (email,password) values ('pfbrodon@gmail.com','123456');
+insert into login (email,password) values ('usuario@gmail.com','123456');
