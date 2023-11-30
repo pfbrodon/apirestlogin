@@ -1,9 +1,9 @@
-from flask import Flask ,jsonify ,request
+from flask import Flask ,jsonify ,request, render_template
 # del modulo flask importar la clase Flask y los métodos jsonify,request
 from flask_cors import CORS       # del modulo flask_cors importar CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
-app=Flask(__name__)  # crear el objeto app de la clase Flask
+app=Flask(__name__,template_folder='template')  # crear el objeto app de la clase Flask
 CORS(app) #modulo cors es para que me permita acceder desde el frontend al backend
 
 
@@ -14,9 +14,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False #none
 db= SQLAlchemy(app)   #crea el objeto db de la clase SQLAlquemy
 ma=Marshmallow(app)   #crea el objeto ma de de la clase Marshmallow
 
-@app.route('/')
+'''@app.route('/')
 def hello_world():
-    return 'Hello from Flask!'
+    return 'Hello from Flask!'''
+
+@app.route('/')
+def home():
+    return render_template('index.html')
 # defino las tablas
 class Producto(db.Model):   # la clase Producto hereda de db.Model    
     id=db.Column(db.Integer, primary_key=True)   #define los campos de la tabla
@@ -34,19 +38,24 @@ class Producto(db.Model):   # la clase Producto hereda de db.Model
         self.descripcion=descripcion
         self.precioUnit=precioUnit
         self.precioVPublico=precioVPublico
-
-
-
-
-    #  si hay que crear mas tablas , se hace aqui
-class Login(db.Model):   # la clase Producto hereda de db.Model    
-    id=db.Column(db.Integer, primary_key=True)   #define los campos de la tabla
-    email=db.Column(db.String(45))
-    password=db.Column(db.String(8))
+#########tabala Login###############
+class Login(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(45), unique=True, nullable=False)
+    password = db.Column(db.String(8), nullable=False)
     
     def __init__(self,email,password):   #crea el  constructor de la clase
         self.email=email  # no hace falta el id porque lo crea sola mysql por ser auto_incremento
         self.password=password
+
+##############################################
+
+    #  si hay que crear mas tablas , se hace aqui
+'''class Login(db.Model):   # la clase Producto hereda de db.Model    
+    id=db.Column(db.Integer, primary_key=True)   #define los campos de la tabla
+    email=db.Column(db.String(45))
+    password=db.Column(db.String(8))'''
+    
 
 
 
@@ -123,7 +132,21 @@ def update_producto(id):
 
     db.session.commit()    # confirma el cambio
     return producto_schema.jsonify(producto)    # y retorna un json con el producto
- 
+##############login#################################
+@app.route('/login', methods=['GET','POST'])
+def login():
+    email = request.form['email']
+    password = request.form['password']
+
+    #usuario_autenticado = Login.query.filter_by(email=email).first()
+    usuario_autenticado = Login.query.filter_by(email=email, password=password).first()
+
+    if usuario_autenticado: # and check_password_hash(usuario_autenticado.password, password):
+        # Autenticación exitosa
+        return render_template('admin.html', email=usuario_autenticado.email)
+    else:
+        # Credenciales incorrectas
+        return render_template('index.html', mensaje="Usuario Incorrecto") 
 
 
 # programa principal *******************************

@@ -5,16 +5,16 @@ from flask_marshmallow import Marshmallow
 app = Flask(__name__,template_folder='template')
 
 ###############################BASE EXTERNA##################################################################
-app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://uxtnljfkp4myf8zq:LyNiq1rBwIZKVSibMMT2@bjyscvxkl0myibglf5tr-mysql.services.clever-cloud.com/bjyscvxkl0myibglf5tr'
+#app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://uxtnljfkp4myf8zq:LyNiq1rBwIZKVSibMMT2@bjyscvxkl0myibglf5tr-mysql.services.clever-cloud.com/bjyscvxkl0myibglf5tr'
 ## URI de la BBDD                          driver de la BD  user:clave@URLBBDD/nombreBBDD
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False #none
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False #none
 #############################################################################################################
 
 ###############################BASE LOCAL####################################################################
 # configuro la base de datos, con el nombre el usuario y la clave
-#app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:root@localhost/proyecto'
+app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:root@localhost/proyecto'
 # URI de la BBDD                          driver de la BD  user:clave@URLBBDD/nombreBBDD
-#app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False #none
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False #none
 ##############################################################################################################
 db= SQLAlchemy(app)   #crea el objeto db de la clase SQLAlquemy
 ma= Marshmallow(app)   #crea el objeto ma de de la clase Marshmallow
@@ -44,7 +44,7 @@ def login():
 
     if usuario_autenticado: # and check_password_hash(usuario_autenticado.password, password):
         # Autenticación exitosa
-        return render_template('admin.html', email=usuario_autenticado.email)
+        return render_template('bienvenida.html', email=usuario_autenticado.email)
     else:
         # Credenciales incorrectas
         return render_template('index.html', mensaje="Usuario Incorrecto")
