@@ -21,6 +21,10 @@ def hello_world():
 @app.route('/')
 def home():
     return render_template('index.html')
+
+@app.route('/')
+def admin():
+    return render_template('admin.html')
 # defino las tablas
 class Producto(db.Model):   # la clase Producto hereda de db.Model    
     id=db.Column(db.Integer, primary_key=True)   #define los campos de la tabla
@@ -143,7 +147,7 @@ def login():
 
     if usuario_autenticado: # and check_password_hash(usuario_autenticado.password, password):
         # Autenticación exitosa
-        return render_template('admin.html', email=usuario_autenticado.email)
+        return render_template('admin.html')#, email=usuario_autenticado.email)
     else:
         # Credenciales incorrectas
         return render_template('index.html', mensaje="Usuario Incorrecto") 
