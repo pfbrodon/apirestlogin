@@ -19,16 +19,17 @@ def hello_world():
     return 'Hello from Flask!'''
 
 @app.route('/')
-def home():
+def index():
     return render_template('index.html')
 
-@app.route('/')
+@app.route('/producto_nuevo')
 def pnuevo():
     return render_template('producto_nuevo.html')
 
-@app.route('/')
+@app.route('/admin')
 def admin():
     return render_template('admin.html')
+
 
 # defino las tablas
 class Producto(db.Model):   # la clase Producto hereda de db.Model    
@@ -153,7 +154,7 @@ def login():
 
     if usuario_autenticado: # and check_password_hash(usuario_autenticado.password, password):
         # Autenticación exitosa
-        return render_template ('admin.html', email=usuario_autenticado.nombre, producto=get_producto)
+        return render_template ('admin.html', email=usuario_autenticado.nombre)
     else:
         # Credenciales incorrectas
         return render_template('index.html', mensaje="Usuario Incorrecto") 
