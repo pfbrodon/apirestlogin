@@ -23,8 +23,13 @@ def home():
     return render_template('index.html')
 
 @app.route('/')
+def pnuevo():
+    return render_template('producto_nuevo.html')
+
+@app.route('/')
 def admin():
     return render_template('admin.html')
+
 # defino las tablas
 class Producto(db.Model):   # la clase Producto hereda de db.Model    
     id=db.Column(db.Integer, primary_key=True)   #define los campos de la tabla
@@ -47,6 +52,7 @@ class Login(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(45), unique=True, nullable=False)
     password = db.Column(db.String(8), nullable=False)
+    nombre=db.Column(db.String(45), nullable=False)
     
     def __init__(self,email,password):   #crea el  constructor de la clase
         self.email=email  # no hace falta el id porque lo crea sola mysql por ser auto_incremento
@@ -147,7 +153,7 @@ def login():
 
     if usuario_autenticado: # and check_password_hash(usuario_autenticado.password, password):
         # Autenticación exitosa
-        return render_template ('admin.html', email=usuario_autenticado.email)
+        return render_template ('admin.html', email=usuario_autenticado.nombre, producto=get_producto)
     else:
         # Credenciales incorrectas
         return render_template('index.html', mensaje="Usuario Incorrecto") 
