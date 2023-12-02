@@ -11,24 +11,32 @@ CORS(app) #modulo cors es para que me permita acceder desde el frontend al backe
 app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:root@localhost/proyecto'
 # URI de la BBDD                          driver de la BD  user:clave@URLBBDD/nombreBBDD
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False #none
-db= SQLAlchemy(app)   #crea el objeto db de la clase SQLAlquemy
+db= SQLAlchemy(app)   #crea el objeto db de la clase SQLAlquemyb ,cvgb                                    
 ma=Marshmallow(app)   #crea el objeto ma de de la clase Marshmallow
 
-'''@app.route('/')
-def hello_world():
-    return 'Hello from Flask!'''
+#@app.route('/')
+#def hello_world():
+#    return 'Hello from Flask!'
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/producto_nuevo')
-def pnuevo():
-    return render_template('producto_nuevo.html')
-
 @app.route('/admin')
 def admin():
     return render_template('admin.html')
+
+@app.route('/cliente')
+def cliente():
+    return render_template('cliente.html')
+
+@app.route('/producto_nuevo')
+def producto_nuevo():
+    return render_template('producto_nuevo.html')
+
+@app.route('/producto_update')
+def producto_update():
+    return render_template('producto_update.html')
 
 
 # defino las tablas
@@ -54,10 +62,13 @@ class Login(db.Model):
     email = db.Column(db.String(45), unique=True, nullable=False)
     password = db.Column(db.String(8), nullable=False)
     nombre=db.Column(db.String(45), nullable=False)
+    tipouser=db.Column(db.String(14), nullable=False)
     
-    def __init__(self,email,password):   #crea el  constructor de la clase
+    def __init__(self,email,password,nombre,tipouser):   #crea el  constructor de la clase
         self.email=email  # no hace falta el id porque lo crea sola mysql por ser auto_incremento
         self.password=password
+        self.nombre=nombre
+        self.tipouser=tipouser
 
 ##############################################
 
@@ -148,16 +159,22 @@ def update_producto(id):
 def login():
     email = request.form['email']
     password = request.form['password']
+   # tipouser= request.form['tipouser']
 
     #usuario_autenticado = Login.query.filter_by(email=email).first()
     usuario_autenticado = Login.query.filter_by(email=email, password=password).first()
 
     if usuario_autenticado: # and check_password_hash(usuario_autenticado.password, password):
+        print(usuario_autenticado.tipouser)
         # Autenticación exitosa
-        return render_template ('admin.html', email=usuario_autenticado.nombre)
+        if usuario_autenticado.tipouser=='admin':
+            return render_template('admin.html', email=usuario_autenticado.nombre, producto=producto_schema)
+        else:
+            return render_template('cliente.html', email=usuario_autenticado.nombre, producto=Producto)
+
     else:
         # Credenciales incorrectas
-        return render_template('index.html', mensaje="Usuario Incorrecto") 
+        return render_template('index.html', mensaje="Usuario Incorrecto")
 
 
 # programa principal *******************************

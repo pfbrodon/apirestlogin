@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Título</title>
+    <title>Administracion</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
@@ -16,34 +16,34 @@
         <div id="app" class="container">
             <h2>Bienvenido, {{ email }}!</h2>
             <br>
-            <a class="btn btn-primary" href="{{ url_for('static', filename='producto_nuevo.html') }}">Nuevo</a>
+            <a class="btn btn-primary" href="{{ url_for('producto_nuevo') }} ">Nuevo</a>
             <br><br>
-            <div v-if="error">
+            <div v-if="error ">
                 <p>Lo sentimos, hay un error...</p>
             </div>
             <div v-else>
-                <section v-if="cargando">
-                    <div class="spinner-border"></div>
+                <section v-if="cargando ">
+                    <div class="spinner-border "></div>
                     <p>Cargando...</p>
                 </section>
                 <section v-else>
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
+                    <div class="table-responsive ">
+                        <table class="table table-bordered ">
                             <thead>
                                 <tr>
-                                    <th scope="col">Id</th>
-                                    <th scope="col">Categoria</th>
-                                    <th scope="col">Codigo</th>
-                                    <th scope="col">Descripcion</th>
-                                    <th scope="col">Cantidad</th>
-                                    <th scope="col">P Unitario</th>
-                                    <th scope="col">P Publico</th>
-                                    <th scope="col">Administracion</th>
+                                    <th scope="col ">Id</th>
+                                    <th scope="col ">Categoria</th>
+                                    <th scope="col ">Codigo</th>
+                                    <th scope="col ">Descripcion</th>
+                                    <th scope="col ">Cantidad</th>
+                                    <th scope="col ">P Unitario</th>
+                                    <th scope="col ">P Publico</th>
+                                    <th scope="col ">Administracion</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="" v-for="producto in productos" :key="producto.id">
-                                    <td scope="row">{{producto.id}}</td>
+                                <tr class=" " v-for="producto in productos " :key="producto.id ">
+                                    <td scope="row ">{{producto.id}}</td>
                                     <td>{{producto.categoria}}</td>
                                     <td>{{producto.codigo}}</td>
                                     <td>{{producto.descripcion}}</td>
@@ -51,8 +51,8 @@
                                     <td>{{producto.precioUnit}}</td>
                                     <td>{{producto.precioVPublico}}</td>
                                     <td>
-                                        <a class="btn btn-primary" :href="'./producto_update.html?id='+ producto.id">Editar</a>
-                                        <button type="button" class="btn btn-danger" v-on:click="eliminar(producto.id)">Eliminar</button>
+                                        <a class="btn btn-primary " :href=" '{{ url_for('producto_update') }}' ">Editar</a>
+                                        <button type="button " class="btn btn-danger " v-on:click="eliminar(producto.id) ">Eliminar</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -66,15 +66,15 @@
         <!-- Coloca el pie de página aquí -->
     </footer>
     <!-- Enlaces de Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js " integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3 " crossorigin="anonymous "></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js " integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz " crossorigin="anonymous "></script>
     <!-- Enlaces de Vue.js -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js "></script>
     <!-- Enlace de tu script de productos -->
-    <script src="{{ url_for('static', filename='js/productos.js') }}"></script>
+    <script src="{{ url_for( 'static', filename='js/productos.js' ) }} "></script>
     <script>
         // No necesitas importar productos.js como módulo aquí
-        // Simplemente accede a la variable "productos" que debería estar disponible globalmente
+        // Simplemente accede a la variable "productos " que debería estar disponible globalmente
         var app = new Vue({
             el: '#app',
             data: {
