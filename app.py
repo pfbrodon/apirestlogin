@@ -175,11 +175,7 @@ def update_productoCant(id):
     return producto_schema.jsonify(producto)    # y retorna un json con el producto
 ##############login#################################
 @app.route('/login', methods=['POST', 'GET'])
-def login():
-    all_productos=Producto.query.all()         # el metodo query.all() lo hereda de db.Model
-    result=productos_schema.dump(all_productos)
-    jsonify(result)
-    
+def login():    
     email = request.form['email']
     password = request.form['password']
    # tipouser= request.form['tipouser']
@@ -191,7 +187,7 @@ def login():
         print(usuario_autenticado.tipouser)
         # Autenticación exitosa
         if usuario_autenticado.tipouser=='admin':
-            return render_template('prueba.html', email=usuario_autenticado.nombre, jsonify(result))
+            return render_template('prueba.html', email=usuario_autenticado.nombre, producto=get_producto)
         else:
             return render_template('cliente.html', email=usuario_autenticado.nombre, producto=Producto)
 
