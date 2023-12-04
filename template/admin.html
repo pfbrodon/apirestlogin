@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
 </head>
 
 <body>
@@ -14,7 +15,7 @@
     </header>
     <main>
         <div id="app" class="container">
-            <h2>Bienvenido, {{ email }}!</h2>
+            <h2>Bienvenidos, {{ email }}!</h2>
             <br>
             <a class="btn btn-primary" href="{{ url_for('producto_nuevo') }} ">Nuevo</a>
             <br><br>
@@ -42,8 +43,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class=" " v-for="producto in productos " :key="producto.id ">
-                                    <td scope="row ">{{producto.id}}</td>
+                                <tr class="" v-for="producto in productos" :key="producto.id">
+                                    <td scope="row">{{producto.id}}</td>
                                     <td>{{producto.categoria}}</td>
                                     <td>{{producto.codigo}}</td>
                                     <td>{{producto.descripcion}}</td>
@@ -72,25 +73,7 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js "></script>
     <!-- Enlace de tu script de productos -->
     <script src="{{ url_for( 'static', filename='js/productos.js' ) }} "></script>
-    <script>
-        // No necesitas importar productos.js como módulo aquí
-        // Simplemente accede a la variable "productos " que debería estar disponible globalmente
-        var app = new Vue({
-            el: '#app',
-            data: {
-                productos: productos, // Accede a la variable productos desde productos.js
-                email: 'usuario@correo.com', // Asegúrate de definir email o establecerlo desde tu servidor Flask
-                cargando: false,
-                error: false
-            },
-            methods: {
-                eliminar: function(id) {
-                    // Implementa la lógica de eliminación según tus necesidades
-                    console.log('Eliminar producto con ID:', id);
-                }
-            }
-        });
-    </script>
+
 </body>
 
 </html>

@@ -23,8 +23,9 @@ createApp({
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data)
                     this.productos = data;
-                    this.cargando = false
+                    //this.cargando = false
                 })
                 .catch(err => {
                     console.error(err);
@@ -61,7 +62,7 @@ createApp({
             fetch(this.url, options)
                 .then(function() {
                     alert("Registro grabado")
-                    window.location.href = "./admin.html"; // recarga productos.html
+                    window.location.href = "'{{ url_for('producto_update') }}'"; // recarga productos.html
                 })
                 .catch(err => {
                     console.error(err);

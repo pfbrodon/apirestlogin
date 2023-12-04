@@ -21,6 +21,9 @@ ma=Marshmallow(app)   #crea el objeto ma de de la clase Marshmallow
 @app.route('/')
 def index():
     return render_template('index.html')
+@app.route('/prueba')
+def prueba():
+    return render_template('prueba.html')
 
 @app.route('/admin')
 def admin():
@@ -150,13 +153,33 @@ def update_producto(id):
     producto.descripcion=request.json['descripcion']
     producto.precioUnit=request.json['precioUnit']
     producto.precioVPublico=request.json['precioVPublico']
+    
+    db.session.commit()    # confirma el cambio
+    return producto_schema.jsonify(producto)    # y retorna un json con el producto
 
+######RESTAR CANTIDAD####################################################
+@app.route('/productos/<id>' ,methods=['PUT'])
+def update_productoCant(id):
+    producto=Producto.query.get(id)
+ 
 
+    producto.cantidad=request.json['cantidad']
+    #producto.categoria=request.json['categoria']
+    #producto.codigo=request.json['codigo']
+    #producto.descripcion=request.json['descripcion']
+    #producto.precioUnit=request.json['precioUnit']
+    #producto.precioVPublico=request.json['precioVPublico']
+
+##########################################################################
     db.session.commit()    # confirma el cambio
     return producto_schema.jsonify(producto)    # y retorna un json con el producto
 ##############login#################################
-@app.route('/login', methods=['GET','POST'])
+@app.route('/login', methods=['POST', 'GET'])
 def login():
+    all_productos=Producto.query.all()         # el metodo query.all() lo hereda de db.Model
+    result=productos_schema.dump(all_productos)
+    jsonify(result)
+    
     email = request.form['email']
     password = request.form['password']
    # tipouser= request.form['tipouser']
@@ -168,7 +191,7 @@ def login():
         print(usuario_autenticado.tipouser)
         # Autenticación exitosa
         if usuario_autenticado.tipouser=='admin':
-            return render_template('admin.html', email=usuario_autenticado.nombre, producto=producto_schema)
+            return render_template('prueba.html', email=usuario_autenticado.nombre, jsonify(result))
         else:
             return render_template('cliente.html', email=usuario_autenticado.nombre, producto=Producto)
 
