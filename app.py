@@ -21,6 +21,7 @@ ma=Marshmallow(app)   #crea el objeto ma de de la clase Marshmallow
 @app.route('/')
 def index():
     return render_template('index.html')
+
 @app.route('/prueba')
 def prueba():
     return render_template('prueba.html')
@@ -109,9 +110,7 @@ def get_Productos():
     result=productos_schema.dump(all_productos)  # el metodo dump() lo hereda de ma.schema y
                                                  # trae todos los registros de la tabla
     return jsonify(result)                       # retorna un JSON de todos los registros de la tabla
-
-
-
+    
 
 @app.route('/productos/<id>',methods=['GET'])
 def get_producto(id):
@@ -179,17 +178,18 @@ def login():
     email = request.form['email']
     password = request.form['password']
    # tipouser= request.form['tipouser']
-
+   
     #usuario_autenticado = Login.query.filter_by(email=email).first()
     usuario_autenticado = Login.query.filter_by(email=email, password=password).first()
 
     if usuario_autenticado: # and check_password_hash(usuario_autenticado.password, password):
         print(usuario_autenticado.tipouser)
+        
         # Autenticación exitosa
         if usuario_autenticado.tipouser=='admin':
-            return redirect(url_for('prueba'))
+            return render_template('prueba.html', email=usuario_autenticado.nombre, producto=producto_schema)
         else:
-            return render_template('cliente.html', email=usuario_autenticado.nombre, producto=Producto)
+            return render_template('cliente.html', email=usuario_autenticado.nombre, productos=ProductoSchema)
 
     else:
         # Credenciales incorrectas

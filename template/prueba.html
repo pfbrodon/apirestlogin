@@ -9,8 +9,7 @@
 
     <!-- Bootstrap CSS v5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="{{ url_for( 'static', filename='js/prueba.js' ) }} "></script>
+    <!-- ... Otras etiquetas head ... -->
 </head>
 
 <body>
@@ -19,7 +18,6 @@
     </header>
     <main>
         <div class="container" id="app">
-            {{prodductos}}
             <br>
             <button type="button" class="btn btn-primary">Button</button>
             <br>
@@ -38,7 +36,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="producto in productos" class="">
+                        <tr v-for="productos in productos" class="">
                             <td scope="row">{{producto.id}}</td>
                             <td>{{producto.cantidad}}</td>
                             <td>{{producto.categoria}}</td>
@@ -63,7 +61,6 @@
     </script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="{{ url_for( 'static', filename='js/prueba.js' ) }} "></script>
-
 </body>
 
 </html>
