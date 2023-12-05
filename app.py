@@ -1,4 +1,4 @@
-from flask import Flask ,jsonify ,request, render_template
+from flask import Flask ,jsonify ,request, render_template, url_for, redirect
 # del modulo flask importar la clase Flask y los métodos jsonify,request
 from flask_cors import CORS       # del modulo flask_cors importar CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -187,7 +187,7 @@ def login():
         print(usuario_autenticado.tipouser)
         # Autenticación exitosa
         if usuario_autenticado.tipouser=='admin':
-            return render_template('prueba.html', email=usuario_autenticado.nombre, producto=get_producto)
+            return redirect(url_for('prueba'))
         else:
             return render_template('cliente.html', email=usuario_autenticado.nombre, producto=Producto)
 
